@@ -2,6 +2,8 @@
 [![Linux Build](https://github.com/AdnanHodzic/auto-cpufreq/actions/workflows/build-linux.yml/badge.svg?event=push)](https://github.com/AdnanHodzic/auto-cpufreq/actions/workflows/build-linux.yml)
 [![Nix Flake](https://github.com/AdnanHodzic/auto-cpufreq/actions/workflows/build-nix.yaml/badge.svg?event=push)](https://github.com/AdnanHodzic/auto-cpufreq/actions/workflows/build-nix.yaml)
 
+This version (forked and edited by lukasnxyz) includes a --fullcharge flag to temporarily set thinkpad battery thresholds to 98/99 to enable a fullcharge.
+
 Automatic CPU speed & power optimizer for Linux. Actively monitors laptop battery state, CPU usage, CPU temperature, and system load, ultimately allowing you to improve battery life without making any compromises.
 
 For tl;dr folks:
