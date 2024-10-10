@@ -22,6 +22,7 @@ from auto_cpufreq.power_helper import *
 @click.option("--install", is_flag=True, help="Install daemon for (permanent) automatic CPU optimizations")
 @click.option("--update", is_flag=False, help="Update daemon and package for (permanent) automatic CPU optimizations", flag_value="--update")
 @click.option("--remove", is_flag=True, help="Remove daemon for (permanent) automatic CPU optimizations")
+@click.option("--fullcharge", is_flag=True, help="Temporarily raise charge thresholds to 99 until next reboot.")
 @click.option("--force", is_flag=False, help="Force use of either \"powersave\" or \"performance\" governors. Setting to \"reset\" will go back to normal mode")
 @click.option("--config", is_flag=False, required=False, help="Use config file at defined path",)
 @click.option("--stats", is_flag=True, help="View live stats of CPU optimizations made by daemon")
@@ -30,7 +31,7 @@ from auto_cpufreq.power_helper import *
 @click.option("--debug", is_flag=True, help="Show debug info (include when submitting bugs)")
 @click.option("--version", is_flag=True, help="Show currently installed version")
 @click.option("--donate", is_flag=True, help="Support the project")
-def main(monitor, live, daemon, install, update, remove, force, config, stats, get_state, completions, debug, version, donate):
+def main(monitor, live, daemon, install, update, remove, fullcharge, force, config, stats, get_state, completions, debug, version, donate):
     # display info if config file is used
     config_path = find_config_file(config)
     conf.set_path(config_path)
@@ -200,6 +201,10 @@ def main(monitor, live, daemon, install, update, remove, force, config, stats, g
                 gnome_power_rm_reminder_snap()
             else: remove_daemon()
             remove_complete_msg()
+        elif fullcharge:
+            root_check()
+            fullcharge_thresholds()
+            battery_get_thresholds()
         elif stats:
             not_running_daemon_check()
             config_info_dialog()
