@@ -10,12 +10,12 @@ def set_battery(value, mode, bat):
     if os.path.isfile(path): check_output(f"echo {value} | tee {path}", shell=True, text=True)
     else: print(f"WARNING: {path} does NOT exist")
 
-def thinkpad_set_fullcharge():
+def thinkpad_set_threshold_fullcharge():
     if os.path.exists(POWER_SUPPLY_DIR):
         batteries = [name for name in os.listdir(POWER_SUPPLY_DIR) if name.startswith('BAT')]
         for bat in batteries:
-            set_battery("98", "start", bat)
             set_battery("99", "stop", bat)
+            set_battery("98", "start", bat)
     else: print(f"WARNING {POWER_SUPPLY_DIR} does NOT esixt")
 
 def get_threshold_value(mode):

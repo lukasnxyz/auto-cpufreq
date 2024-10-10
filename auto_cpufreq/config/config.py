@@ -58,11 +58,14 @@ class _Config:
     def has_config(self) -> bool: return os.path.isfile(self.path)
     
     def get_config(self) -> ConfigParser: return self._config
-    
+   
     def update_config(self) -> None:
         # create new ConfigParser to prevent old data from remaining
         self._config = ConfigParser()
         try: self._config.read(self.path)
         except ParsingError as e: print(f"The following error occured while parsing the config file: \n{repr(e)}")
+
+    def config_thresholds_are_set(self):
+        return True # TODO: TEMPORARY
 
 config = _Config()

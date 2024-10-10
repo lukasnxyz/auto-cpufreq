@@ -22,7 +22,7 @@ from auto_cpufreq.power_helper import *
 @click.option("--install", is_flag=True, help="Install daemon for (permanent) automatic CPU optimizations")
 @click.option("--update", is_flag=False, help="Update daemon and package for (permanent) automatic CPU optimizations", flag_value="--update")
 @click.option("--remove", is_flag=True, help="Remove daemon for (permanent) automatic CPU optimizations")
-@click.option("--fullcharge", is_flag=True, help="Temporarily raise charge thresholds to 99 until next reboot.")
+@click.option("--fullcharge", is_flag=True, help="Raise charge thresholds to 99.")
 @click.option("--force", is_flag=False, help="Force use of either \"powersave\" or \"performance\" governors. Setting to \"reset\" will go back to normal mode")
 @click.option("--config", is_flag=False, required=False, help="Use config file at defined path",)
 @click.option("--stats", is_flag=True, help="View live stats of CPU optimizations made by daemon")
@@ -203,7 +203,7 @@ def main(monitor, live, daemon, install, update, remove, fullcharge, force, conf
             remove_complete_msg()
         elif fullcharge:
             root_check()
-            fullcharge_thresholds()
+            fullcharge_thresholds(conf)
             battery_get_thresholds()
         elif stats:
             not_running_daemon_check()
