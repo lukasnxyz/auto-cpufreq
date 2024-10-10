@@ -65,7 +65,20 @@ class _Config:
         try: self._config.read(self.path)
         except ParsingError as e: print(f"The following error occured while parsing the config file: \n{repr(e)}")
 
+    # can't import footer (would be circular dependency)
     def config_thresholds_are_set(self):
-        return True # TODO: TEMPORARY
+        reqs = ["enable_thresholds", "start_threshold", "stop_threshold"]
+        if self._config.has_section("battery"):
+            for r in reqs:
+                try: self._config["battery"][r]
+                except KeyError:
+                    print("ERROR:\n\n" + r + "has not been set in your config!")
+                    #footer()
+                    return False
+            return True
+        else:
+            print("ERROR:\n\n No config file found!")
+            #footer()
+            return False
 
 config = _Config()
