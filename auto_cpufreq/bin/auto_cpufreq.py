@@ -22,7 +22,8 @@ from auto_cpufreq.power_helper import *
 @click.option("--install", is_flag=True, help="Install daemon for (permanent) automatic CPU optimizations")
 @click.option("--update", is_flag=False, help="Update daemon and package for (permanent) automatic CPU optimizations", flag_value="--update")
 @click.option("--remove", is_flag=True, help="Remove daemon for (permanent) automatic CPU optimizations")
-@click.option("--fullcharge", is_flag=True, help="Raise charge thresholds to 99.")
+@click.option("--fullcharge", is_flag=True, help="Raise charge thresholds to 99")
+@click.option("--thresholds", is_flag=True, help="Print current battery thresholds")
 @click.option("--force", is_flag=False, help="Force use of either \"powersave\" or \"performance\" governors. Setting to \"reset\" will go back to normal mode")
 @click.option("--config", is_flag=False, required=False, help="Use config file at defined path",)
 @click.option("--stats", is_flag=True, help="View live stats of CPU optimizations made by daemon")
@@ -31,7 +32,7 @@ from auto_cpufreq.power_helper import *
 @click.option("--debug", is_flag=True, help="Show debug info (include when submitting bugs)")
 @click.option("--version", is_flag=True, help="Show currently installed version")
 @click.option("--donate", is_flag=True, help="Support the project")
-def main(monitor, live, daemon, install, update, remove, fullcharge, force, config, stats, get_state, completions, debug, version, donate):
+def main(monitor, live, daemon, install, update, remove, fullcharge, thresholds, force, config, stats, get_state, completions, debug, version, donate):
     # display info if config file is used
     config_path = find_config_file(config)
     conf.set_path(config_path)
@@ -205,6 +206,10 @@ def main(monitor, live, daemon, install, update, remove, fullcharge, force, conf
             root_check()
             fullcharge_thresholds(conf)
             battery_get_thresholds()
+            footer()
+        elif thresholds:
+            battery_get_thresholds()
+            footer()
         elif stats:
             not_running_daemon_check()
             config_info_dialog()
